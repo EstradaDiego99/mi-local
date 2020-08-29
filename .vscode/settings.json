@@ -1,0 +1,8 @@
+{
+  "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\wsl.exe",
+  "window.zoomLevel": 0,
+  "editor.autoIndent": "keep",
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
