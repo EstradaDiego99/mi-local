@@ -1,0 +1,16 @@
+.available {
+  background-color: #eee;
+}
+
+.unavailable {
+  background-color: #555 !important;
+}
+
+.row-cells {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.cells-container {
+  overflow: scroll;
+}
