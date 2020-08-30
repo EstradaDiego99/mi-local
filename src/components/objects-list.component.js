@@ -31,11 +31,13 @@ export default class ObjectsList extends Component {
     const objectsList = [];
     for (const i in objects) {
       objectsList.push(
-        <div className="object-component">
+        <div className="object-component card mt-5 new-object-card">
           <p>{objects[i].nombre}</p>
-          <div className="d-flex">
-            <div>{this.getObjectGrid(objects[i].forma)}</div>
-            <div>
+          <div className="d-flex ">
+            <div className="col-md-4">
+              {this.getObjectGrid(objects[i].forma)}
+            </div>
+            <div className="col-md-4">
               <div>
                 <span>Capacidad: </span>
                 <span>{objects[i].capacidad}</span>
@@ -45,7 +47,15 @@ export default class ObjectsList extends Component {
                 <span>{objects[i].cantidad}</span>
               </div>
             </div>
-            <button onClick={() => this.props.removeObject(i)}>Eliminar</button>
+            <div className="col-md-4">
+              <button
+                className="btn btn-danger"
+                id="eliminar"
+                onClick={() => this.props.removeObject(i)}
+              >
+                Eliminar
+              </button>
+            </div>
           </div>
         </div>
       );
