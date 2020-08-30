@@ -22,6 +22,11 @@ export default class LocalGrid extends Component {
     this.selectColor = this.selectColor.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({ width: Math.floor(this.props.matrix[0].length / 2) });
+    this.setState({ height: Math.floor(this.props.matrix.length / 2) });
+  }
+
   handleInputChange(event) {
     let { name, value } = event.target;
     this.setState({
@@ -164,7 +169,7 @@ export default class LocalGrid extends Component {
             }
           >
             <div className="available-button"></div>
-            <span>Available</span>
+            <span>Libre</span>
           </button>
           <button
             onClick={() => this.selectColor(typesOfCell.BLOCKED)}
@@ -175,7 +180,7 @@ export default class LocalGrid extends Component {
             }
           >
             <div className="blocked-button"></div>
-            <span>Blocking</span>
+            <span>Ocupado</span>
           </button>
           <button
             onClick={() => this.selectColor(typesOfCell.WALKING)}
@@ -186,7 +191,7 @@ export default class LocalGrid extends Component {
             }
           >
             <div className="walking-button"></div>
-            <span>Walking</span>
+            <span>Pasillo</span>
           </button>
           <button
             onClick={() => this.selectColor(typesOfCell.ACCESSIBILITY)}
@@ -197,7 +202,7 @@ export default class LocalGrid extends Component {
             }
           >
             <div className="accessibility-button"></div>
-            <span>Accessibility</span>
+            <span>Acccesibilidad</span>
           </button>
         </div>
       </div>

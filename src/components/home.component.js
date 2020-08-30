@@ -248,7 +248,7 @@ export default class Home extends Component {
                 className="btn btn-primary col-md-12"
                 onClick={this.triggerNewObjectPanel}
               >
-                Nuevo mueble
+                Nuevo objeto
               </button>
               <div
                 id="new-object-container"
