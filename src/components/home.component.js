@@ -73,7 +73,9 @@ export default class Home extends Component {
       for (const j in matrix[i]) {
         row.push(
           <button
-            className={this.state.matrix[i][j] ? "available" : "unavailable"}
+            className={
+              this.state.matrix[i][j] ? "cell available" : "cell unavailable"
+            }
             onClick={() => {
               this.updateMatrix(i, j);
             }}
@@ -94,11 +96,12 @@ export default class Home extends Component {
     // let heightInput = React.createRef();
 
     return (
-      <div>
-        <div className="d-inline-flex">
-          <form>
-            <div className="form-group">
-              <label>Largo: </label>
+      <div className="map">
+        <h1>Selecciona tu espacio</h1>
+        <form>
+          <div className="form-row">
+            <div className="form-group col-md-4">
+              <label>Ancho: </label>
               <input
                 type="text"
                 name="width"
@@ -109,8 +112,8 @@ export default class Home extends Component {
                 onChange={this.handleInputChange}
               />
             </div>
-            <div className="form-group">
-              <label>Ancho: </label>
+            <div className="form-group col-md-4">
+              <label>Largo: </label>
               <input
                 type="text"
                 name="height"
@@ -121,9 +124,22 @@ export default class Home extends Component {
                 onChange={this.handleInputChange}
               />
             </div>
-            <button onClick={this.updateSize}>Actualizar</button>
-          </form>
-        </div>
+            <div className="form-group col-md-4">
+              <label></label>
+              <button
+                className="btn btn-primary button"
+                onClick={this.updateSize}
+              >
+                Actualizar
+              </button>
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-group col-12">
+              <label>Tome en cuenta que las medidas estan en metros</label>
+            </div>
+          </div>
+        </form>
         <div className="cells-container">{objectMatrix}</div>
       </div>
     );

@@ -9,6 +9,19 @@ function App() {
   return (
     <Router>
       <div className="container">
+        <nav className="navbar nav">
+          <a class="nav-link ">
+            <img
+              src="https://image.flaticon.com/icons/svg/904/904140.svg"
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+              alt=""
+              loading="lazy"
+            ></img>
+          </a>
+          <a className="nav-link">MI LOCAL</a>
+        </nav>
         <Route path="/" exact component={Home} />
       </div>
     </Router>

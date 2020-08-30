@@ -1,9 +1,16 @@
+.map {
+  max-width: 50vw;
+  width: 50vw;
+  margin: 0;
+  text-align: center;
+}
+
 .available {
-  background-color: #eee;
 }
 
 .unavailable {
-  background-color: #555 !important;
+  background-color: rgb(1, 91, 133) !important;
+  color: rgb(1, 91, 133) !important;
 }
 
 .row-cells {
@@ -13,4 +20,36 @@
 
 .cells-container {
   overflow: scroll;
+}
+
+.button {
+  border-radius: 10px;
+  max-height: 3em;
+  padding: 5px 10px;
+  color: white;
+  border: none;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.75);
+  margin-top: 2em;
+}
+.primaryButton:hover {
+  background-color: rgb(56, 135, 224);
+}
+
+.form {
+  display: flex;
+  margin: 2em;
+}
+
+.cell {
+  background-color: rgb(202, 240, 255);
+  border: 0px solid rgb(199, 225, 255);
+  margin: 0.08em;
+  color: rgb(202, 240, 255);
+  width: 2em !important;
+}
+@media only screen and (max-width: 700px) {
+  .map {
+    max-width: 100vw !important;
+    width: 100vw;
+  }
 }
