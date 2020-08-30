@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import NewObject from "./new-object.component";
 import ObjectsList from "./objects-list.component";
 import "./home.css";
+import { typesOfCell } from "../globals";
 
 export default class Home extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export default class Home extends Component {
 
       /** Grid used to represent the local space */
       matrix: new Array(20).fill().map(function () {
-        return new Array(20).fill(true);
+        return new Array(20).fill(typesOfCell.AVAILABLE);
       }),
 
       /** Objects we will store */
@@ -24,6 +25,9 @@ export default class Home extends Component {
 
       /** Do we show the new object panel? */
       showNewObject: false,
+
+      /** Selected color to click on when selecting the local grid */
+      selectedColorOption: typesOfCell.BLOCKED,
 
       /** The total amount of customers we have based on the objects we have */
       aforoTotal: 0,
@@ -44,6 +48,7 @@ export default class Home extends Component {
     this.triggerNewObjectPanel = this.triggerNewObjectPanel.bind(this);
     this.beGONE = this.beGONE.bind(this);
     this.removeObject = this.removeObject.bind(this);
+    this.selectColor = this.selectColor.bind(this);
   }
 
   handleInputChange(event) {
@@ -55,7 +60,7 @@ export default class Home extends Component {
 
   updateMatrix(i, j) {
     const neoMatrix = this.state.matrix;
-    neoMatrix[i][j] = !neoMatrix[i][j];
+    neoMatrix[i][j] = this.state.selectedColorOption;
     this.setState({ matrix: neoMatrix });
   }
 
@@ -105,6 +110,25 @@ export default class Home extends Component {
     console.log("beGONE!!!");
   }
 
+  colorFromMatrixState(state) {
+    switch (state) {
+      case typesOfCell.AVAILABLE:
+        return "cell available";
+      case typesOfCell.BLOCKED:
+        return "cell unavailable";
+      case typesOfCell.WALKING:
+        return "cell walking";
+      case typesOfCell.ACCESSIBILITY:
+        return "cell accessibility";
+      default:
+        return "cell unavailable";
+    }
+  }
+
+  selectColor(cellColor) {
+    this.setState({ selectedColorOption: cellColor });
+  }
+
   generateMatrix(matrix) {
     const buttonsList = [];
     for (const i in matrix) {
@@ -112,9 +136,7 @@ export default class Home extends Component {
       for (const j in matrix[i]) {
         row.push(
           <button
-            className={
-              this.state.matrix[i][j] ? "cell available" : "cell unavailable"
-            }
+            className={this.colorFromMatrixState(this.state.matrix[i][j])}
             onClick={() => {
               this.updateMatrix(i, j);
             }}
@@ -135,8 +157,6 @@ export default class Home extends Component {
         {this.generateMatrix(this.state.matrix)}
       </div>
     );
-    // let widthInput = React.createRef();
-    // let heightInput = React.createRef();
 
     return (
       <div>
@@ -234,6 +254,52 @@ export default class Home extends Component {
               </button>
             </form>
             {objectMatrix}
+            <div className="d-flex flex-wrap justify-content-around">
+              <button
+                onClick={() => this.selectColor(typesOfCell.AVAILABLE)}
+                className={
+                  this.state.selectedColorOption === typesOfCell.AVAILABLE
+                    ? "color-button d-flex selected-color-button"
+                    : "color-button d-flex"
+                }
+              >
+                <div className="available-button"></div>
+                <span>Available</span>
+              </button>
+              <button
+                onClick={() => this.selectColor(typesOfCell.BLOCKED)}
+                className={
+                  this.state.selectedColorOption === typesOfCell.BLOCKED
+                    ? "color-button d-flex selected-color-button"
+                    : "color-button d-flex"
+                }
+              >
+                <div className="blocked-button"></div>
+                <span>Blocking</span>
+              </button>
+              <button
+                onClick={() => this.selectColor(typesOfCell.WALKING)}
+                className={
+                  this.state.selectedColorOption === typesOfCell.WALKING
+                    ? "color-button d-flex selected-color-button"
+                    : "color-button d-flex"
+                }
+              >
+                <div className="walking-button"></div>
+                <span>Walking</span>
+              </button>
+              <button
+                onClick={() => this.selectColor(typesOfCell.ACCESSIBILITY)}
+                className={
+                  this.state.selectedColorOption === typesOfCell.ACCESSIBILITY
+                    ? "color-button d-flex selected-color-button"
+                    : "color-button d-flex"
+                }
+              >
+                <div className="accessibility-button"></div>
+                <span>Accessibility</span>
+              </button>
+            </div>
           </div>
           <div className="col-12 col-md-6 mt-4 mb-5">
             <button

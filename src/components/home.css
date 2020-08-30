@@ -101,6 +101,51 @@ h1 {
   height: 20px !important;
 }
 
+.available {
+  background-color: rgb(202, 240, 255);
+}
+
+.unavailable {
+  background-color: rgb(1, 91, 133) !important;
+}
+
+.walking {
+  background-color: rgb(52, 153, 57);
+}
+
+.accessibility {
+  background-color: rgb(54, 190, 190);
+}
+
+.color-button {
+  background-color: transparent;
+  border: transparent;
+  align-items: center;
+}
+
+.color-button div {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+
+.selected-color-button {
+  background-color: #aaa;
+}
+
+.available-button {
+  background-color: rgb(202, 240, 255);
+}
+.blocked-button {
+  background-color: rgb(1, 91, 133);
+}
+.walking-button {
+  background-color: rgb(52, 153, 57);
+}
+.accessibility-button {
+  background-color: rgb(54, 190, 190);
+}
+
 .display {
   display: block;
 }

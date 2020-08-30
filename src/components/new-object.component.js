@@ -100,11 +100,10 @@ export default class NewObject extends Component {
 
   saveNewObject(event) {
     event.preventDefault();
-    // TODO(diego): Add function to trim the object borders
-    // TODO(diego): Update function when the algorithm supports complex shapes
+    const matrixToPush = this.tripObjectBorders(this.state.newObjectMatrix);
     this.props.objects.push({
       nombre: this.state.newObjectName,
-      forma: this.state.newObjectMatrix,
+      forma: matrixToPush,
       capacidad: this.state.peopleQuantity,
       cantidad: this.state.objectsQuantity,
     });
@@ -115,6 +114,41 @@ export default class NewObject extends Component {
     this.setState({
       newObjectMatrix: new Array(4).fill().map(() => new Array(4).fill(true)),
     });
+  }
+
+  tripObjectBorders(matrix) {
+    var emptyBorders = true;
+    while (emptyBorders) {
+      /** Check upper border */
+      var emptyUpBorder = true;
+      for (const j in matrix[0]) if (!matrix[0][j]) emptyUpBorder = false;
+      if (emptyUpBorder) matrix.splice(0, 1);
+
+      /** Check left border */
+      var emptyLeftBorder = true;
+      for (const i in matrix) if (!matrix[i][0]) emptyLeftBorder = false;
+      if (emptyLeftBorder) for (const i in matrix) matrix[i].splice(0, 1);
+
+      /** Check lower border */
+      var emptyLowerBorder = true;
+      for (const j in matrix[0])
+        if (!matrix[matrix.length - 1][j]) emptyLowerBorder = false;
+      if (emptyLowerBorder) matrix.pop();
+
+      /** Check right border */
+      var emptyRightBorder = true;
+      for (const i in matrix)
+        if (!matrix[i][matrix[0].length - 1]) emptyRightBorder = false;
+      if (emptyRightBorder) for (const i in matrix) matrix[i].pop();
+
+      emptyBorders =
+        emptyUpBorder ||
+        emptyLeftBorder ||
+        emptyLowerBorder ||
+        emptyRightBorder;
+    }
+
+    return matrix;
   }
 
   render() {
@@ -142,6 +176,7 @@ export default class NewObject extends Component {
             <div id="people-quantity-input" className="quantity-input d-flex">
               <span>
                 <img
+                  alt=""
                   className="icono"
                   src="https://image.flaticon.com/icons/svg/1384/1384286.svg"
                 />
@@ -171,6 +206,7 @@ export default class NewObject extends Component {
             <div id="objects-quantity-input" className="quantity-input d-flex">
               <span>
                 <img
+                  alt=""
                   className="icono"
                   src="https://image.flaticon.com/icons/svg/655/655628.svg"
                 />
