@@ -111,56 +111,63 @@ export default class Home extends Component {
     // let heightInput = React.createRef();
 
     return (
-      <div className="map">
-        <h1>Selecciona tu espacio</h1>
-        <form>
-          <div className="form-row">
-            <div className="form-group col-md-4">
-              <label>Ancho: </label>
-              <input
-                type="text"
-                name="width"
-                autoComplete="nope"
-                ref={this.state.widthInput}
-                className="form-control"
-                value={this.state.width}
-                onChange={this.handleInputChange}
-              />
+      <div>
+        <div className="map">
+          <h1>Selecciona tu espacio</h1>
+          <form>
+            <div className="form-row">
+              <div className="form-group col-md-4">
+                <label>Ancho: </label>
+                <input
+                  type="text"
+                  name="width"
+                  autoComplete="nope"
+                  ref={this.state.widthInput}
+                  className="form-control"
+                  value={this.state.width}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              <div className="form-group col-md-4">
+                <label>Largo: </label>
+                <input
+                  type="text"
+                  name="height"
+                  autoComplete="nope"
+                  ref={this.state.heightInput}
+                  className="form-control"
+                  value={this.state.height}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              <div className="form-group col-md-4">
+                <label></label>
+                <button
+                  className="btn btn-primary button"
+                  onClick={this.updateSize}
+                >
+                  Actualizar
+                </button>
+              </div>
             </div>
-            <div className="form-group col-md-4">
-              <label>Largo: </label>
-              <input
-                type="text"
-                name="height"
-                autoComplete="nope"
-                ref={this.state.heightInput}
-                className="form-control"
-                value={this.state.height}
-                onChange={this.handleInputChange}
-              />
+            <div className="form-row">
+              <div className="form-group col-12">
+                <label>Tome en cuenta que las medidas estan en metros</label>
+              </div>
             </div>
-            <div className="form-group col-md-4">
-              <label></label>
-              <button
-                className="btn btn-primary button"
-                onClick={this.updateSize}
-              >
-                Actualizar
-              </button>
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-group col-12">
-              <label>Tome en cuenta que las medidas estan en metros</label>
-            </div>
-          </div>
-        </form>
-        <div className="cells-container">{objectMatrix}</div>
-        <div className="mt-4">
-          <button onClick={this.triggerNewObjectPanel}>Nuevo mueble</button>
+          </form>
+          <div className="cells-container">{objectMatrix}</div>
+        </div>
+        <div className="objects">
+          <button
+            className="btn btn-primary"
+            onClick={this.triggerNewObjectPanel}
+          >
+            Nuevo mueble
+          </button>
           <div
             id="new-object-container"
-            className={this.state.showNewObject ? "d-block" : "d-none"}
+            className={this.state.showNewObject ? "display " : "d-none"}
           >
             <NewObject
               objects={this.state.objects}

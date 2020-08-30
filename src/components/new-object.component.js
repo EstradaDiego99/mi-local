@@ -114,11 +114,17 @@ export default class NewObject extends Component {
             increseGridColumn={this.increseGridColumn}
             decreaseGridColumn={this.decreaseGridColumn}
           />
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column ml-2 mt-2">
             <div id="people-quantity-input" className="quantity-input d-flex">
-              <span>P: </span>
+              <span>
+                <img
+                  className="icono"
+                  src="https://image.flaticon.com/icons/svg/1384/1384286.svg"
+                />
+              </span>
               <button
                 name="peopleQuantity"
+                className="btn btn-light ml-2 mr-2"
                 onClick={(event) => {
                   event.preventDefault();
                   this.updateQuantities(event, -1);
@@ -129,6 +135,7 @@ export default class NewObject extends Component {
               <input type="text" value={this.state.peopleQuantity}></input>
               <button
                 name="peopleQuantity"
+                className="btn btn-light ml-2 mr-2"
                 onClick={(event) => {
                   event.preventDefault();
                   this.updateQuantities(event, 1);
@@ -138,9 +145,15 @@ export default class NewObject extends Component {
               </button>
             </div>
             <div id="objects-quantity-input" className="quantity-input d-flex">
-              <span>O: </span>
+              <span>
+                <img
+                  className="icono"
+                  src="https://image.flaticon.com/icons/svg/655/655628.svg"
+                />
+              </span>
               <button
                 name="objectsQuantity"
+                className="btn btn-light ml-2 mr-2"
                 onClick={(event) => {
                   event.preventDefault();
                   this.updateQuantities(event, -1);
@@ -151,6 +164,7 @@ export default class NewObject extends Component {
               <input type="text" value={this.state.objectsQuantity}></input>
               <button
                 name="objectsQuantity"
+                className="btn btn-light ml-2 mr-2"
                 onClick={(event) => {
                   event.preventDefault();
                   this.updateQuantities(event, 1);
@@ -160,7 +174,9 @@ export default class NewObject extends Component {
               </button>
             </div>
             <div className="flex-grow-1"></div>
-            <button onClick={this.saveNewObject}>Guardar objeto</button>
+            <button className="btn btn-primary" onClick={this.saveNewObject}>
+              Guardar objeto
+            </button>
           </div>
         </div>
       </form>
