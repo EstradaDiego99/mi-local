@@ -1,3 +1,7 @@
+body::-webkit-scrollbar {
+  display: none;
+}
+
 h1 {
   text-align: center;
 }
@@ -32,10 +36,32 @@ h1 {
   margin: 0 auto;
 }
 
+#admittance-text-summary {
+  text-align: center;
+}
+
+#admittance-text-summary p {
+  margin: 0;
+  margin-top: -1em;
+}
+
+#admittance-text-summary strong {
+  font-size: 3em;
+  font-weight: bolder;
+  color: rgb(1, 91, 133);
+}
+
 .cells-container {
   width: 100%;
   height: min(100vw, 100%);
   overflow: scroll;
+}
+.cells-container::-webkit-scrollbar {
+  display: none;
+}
+
+#calculate-layout {
+  margin: 1em 8%;
 }
 
 #new-object-name {

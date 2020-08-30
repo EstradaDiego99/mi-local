@@ -24,12 +24,25 @@ export default class Home extends Component {
 
       /** Do we show the new object panel? */
       showNewObject: false,
+
+      /** The total amount of customers we have based on the objects we have */
+      aforoTotal: 0,
+
+      /** The percentage of the total amount of customers we can hold */
+      porcentajeAforo: 100.0,
+
+      /** Amount in meters of distance necesary between groups of people */
+      minDistance: 0.0,
+
+      /** Amount in people total we will be able to hold */
+      gentePermitida: 0,
     };
 
     this.updateMatrix = this.updateMatrix.bind(this);
     this.updateSize = this.updateSize.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.triggerNewObjectPanel = this.triggerNewObjectPanel.bind(this);
+    this.beGONE = this.beGONE.bind(this);
     this.removeObject = this.removeObject.bind(this);
   }
 
@@ -88,6 +101,10 @@ export default class Home extends Component {
     this.setState({ objects: objects });
   }
 
+  beGONE() {
+    console.log("beGONE!!!");
+  }
+
   generateMatrix(matrix) {
     const buttonsList = [];
     for (const i in matrix) {
@@ -124,8 +141,59 @@ export default class Home extends Component {
     return (
       <div>
         <header>
-          <h1>Acomodando mi espacio</h1>
+          <h1 className="mt-2">Acomodando mi espacio</h1>
+          <div className="d-flex flex-wrap container mt-5">
+            <div className="col-6 col-md-4 mb-3">
+              <label>Porcentaje de Aforo: </label>
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  name="porcentajeAforo"
+                  value={this.state.porcentajeAforo}
+                  onChange={this.handleInputChange}
+                ></input>
+                <div className="input-group-append">
+                  <span className="input-group-text">%</span>
+                </div>
+              </div>
+              <small>
+                De un aforo total de {this.state.aforoTotal} personas
+              </small>
+            </div>
+            <div className="col-6 col-md-4 mb-3">
+              <label>Distancia mínima necesaria: </label>
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  name="minDistance"
+                  value={this.state.minDistance}
+                  onChange={this.handleInputChange}
+                ></input>
+                <div className="input-group-append">
+                  <span className="input-group-text">mts</span>
+                </div>
+              </div>
+            </div>
+            <div id="admittance-text-summary" className="col-12 col-md-3">
+              <p className="mt-1">Admitiendo</p>
+              <p>
+                <strong>{this.state.gentePermitida}</strong>
+              </p>
+              <p> personas</p>
+            </div>
+          </div>
         </header>
+
+        <button
+          id="calculate-layout"
+          className="btn btn-primary button col-10"
+          onClick={this.beGONE}
+        >
+          Calcular acomodo
+        </button>
+
         <div className="container d-flex flex-wrap">
           <div className="col-12 col-md-6 mt-4 card p-2">
             <form className="d-flex container-fluid flex-wrap align-items-center mb-1 justify-content-center">
@@ -139,8 +207,8 @@ export default class Home extends Component {
                   value={this.state.width}
                   onChange={this.handleInputChange}
                 />
-                <div class="input-group-append">
-                  <span class="input-group-text">mts</span>
+                <div className="input-group-append">
+                  <span className="input-group-text">mts</span>
                 </div>
               </div>
               <span>X</span>
@@ -154,8 +222,8 @@ export default class Home extends Component {
                   value={this.state.height}
                   onChange={this.handleInputChange}
                 />
-                <div class="input-group-append">
-                  <span class="input-group-text">mts</span>
+                <div className="input-group-append">
+                  <span className="input-group-text">mts</span>
                 </div>
               </div>
               <button
