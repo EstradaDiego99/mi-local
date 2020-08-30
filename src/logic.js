@@ -2,7 +2,8 @@ const { typesOfCell } = require("./globals");
 
 function sum_array(our_array) {
   let sum = 0;
-  for (var i = 0; i < our_array.length; i++) sum += our_array[i].capacidad;
+  for (var i = 0; i < our_array.length; i++)
+    sum += our_array[i].capacidad * our_array[i].cantidad;
   return sum;
 }
 
@@ -10,6 +11,7 @@ function poner_muebles(space, final_object_array, distancia) {
   let rows_space = space.length;
   let columns_space = space[0].length;
 
+  /** Actualizando la lista de objetos para tener toda la cantidad necesaria */
   const finalObject = [];
   for (const i in final_object_array) {
     for (var w = 0; w < final_object_array[i].cantidad; w++)
@@ -49,7 +51,11 @@ function poner_muebles(space, final_object_array, distancia) {
               space_2[l][k] !== typesOfCell.ACCESSIBILITY &&
               space_2[l][k] !== typesOfCell.WALKING
             ) {
-              space_2[l][k] = typesOfCell.OBJECT;
+              if (finalObject[finalObject.length - 1].forma[l - i][k - j]) {
+                space_2[l][k] = typesOfCell.DISTANCE;
+              } else {
+                space_2[l][k] = typesOfCell.OBJECT;
+              }
               // console.log(space_2);
             } else {
               sucess = false;

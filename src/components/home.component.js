@@ -32,7 +32,7 @@ export default class Home extends Component {
       porcentajeAforo: 100.0,
 
       /** Amount in meters of distance necesary between groups of people */
-      minDistance: 0.0,
+      minDistance: 1.5,
 
       /** Amount in people total we will be able to hold */
       gentePermitida: 0,
@@ -114,7 +114,6 @@ export default class Home extends Component {
   }
 
   beGONE() {
-    console.log("beGONE!!!");
     const matrixCopy = [];
     for (var i = 0; i < this.state.matrix.length; i++)
       matrixCopy[i] = this.state.matrix[i].slice();
