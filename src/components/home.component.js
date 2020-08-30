@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import NewObject from "./new-object.component";
 import ObjectsList from "./objects-list.component";
+import LocalGrid from "./local-grid.component";
 import "./home.css";
 import { typesOfCell } from "../globals";
 
@@ -9,12 +10,6 @@ export default class Home extends Component {
     super(props);
 
     this.state = {
-      /** Width of the local space in meters */
-      width: 10.0,
-
-      /** Height of the local space in meters */
-      height: 10.0,
-
       /** Grid used to represent the local space */
       matrix: new Array(20).fill().map(function () {
         return new Array(20).fill(typesOfCell.AVAILABLE);
@@ -25,9 +20,6 @@ export default class Home extends Component {
 
       /** Do we show the new object panel? */
       showNewObject: false,
-
-      /** Selected color to click on when selecting the local grid */
-      selectedColorOption: typesOfCell.BLOCKED,
 
       /** The total amount of customers we have based on the objects we have */
       aforoTotal: 0,
@@ -43,6 +35,7 @@ export default class Home extends Component {
     };
 
     this.updateMatrix = this.updateMatrix.bind(this);
+    this.replaceMatrix = this.replaceMatrix.bind(this);
     this.updateSize = this.updateSize.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.triggerNewObjectPanel = this.triggerNewObjectPanel.bind(this);
@@ -58,9 +51,13 @@ export default class Home extends Component {
     });
   }
 
-  updateMatrix(i, j) {
+  updateMatrix(i, j, selectedColorOption) {
     const neoMatrix = this.state.matrix;
-    neoMatrix[i][j] = this.state.selectedColorOption;
+    neoMatrix[i][j] = selectedColorOption;
+    this.setState({ matrix: neoMatrix });
+  }
+
+  replaceMatrix(neoMatrix) {
     this.setState({ matrix: neoMatrix });
   }
 
@@ -151,13 +148,6 @@ export default class Home extends Component {
   }
 
   render() {
-    /** When the cell is true, the space is available */
-    const objectMatrix = (
-      <div className="cells-container">
-        {this.generateMatrix(this.state.matrix)}
-      </div>
-    );
-
     return (
       <div>
         <header>
@@ -215,92 +205,11 @@ export default class Home extends Component {
         </button>
 
         <div className="container d-flex flex-wrap">
-          <div className="col-12 col-md-6 mt-4 card p-2">
-            <form className="d-flex container-fluid flex-wrap align-items-center mb-1 justify-content-center">
-              <div className="input-group col-5 p-1">
-                <input
-                  type="text"
-                  name="width"
-                  autoComplete="nope"
-                  className="form-control"
-                  placeholder="Largo"
-                  value={this.state.width}
-                  onChange={this.handleInputChange}
-                />
-                <div className="input-group-append">
-                  <span className="input-group-text">mts</span>
-                </div>
-              </div>
-              <span>X</span>
-              <div className="input-group col-5 p-1">
-                <input
-                  type="text"
-                  name="height"
-                  autoComplete="nope"
-                  className="form-control"
-                  placeholder="Ancho"
-                  value={this.state.height}
-                  onChange={this.handleInputChange}
-                />
-                <div className="input-group-append">
-                  <span className="input-group-text">mts</span>
-                </div>
-              </div>
-              <button
-                className="btn btn-primary button col-11 mt-2 mb-2"
-                onClick={this.updateSize}
-              >
-                Actualizar
-              </button>
-            </form>
-            {objectMatrix}
-            <div className="d-flex flex-wrap justify-content-around">
-              <button
-                onClick={() => this.selectColor(typesOfCell.AVAILABLE)}
-                className={
-                  this.state.selectedColorOption === typesOfCell.AVAILABLE
-                    ? "color-button d-flex selected-color-button"
-                    : "color-button d-flex"
-                }
-              >
-                <div className="available-button"></div>
-                <span>Available</span>
-              </button>
-              <button
-                onClick={() => this.selectColor(typesOfCell.BLOCKED)}
-                className={
-                  this.state.selectedColorOption === typesOfCell.BLOCKED
-                    ? "color-button d-flex selected-color-button"
-                    : "color-button d-flex"
-                }
-              >
-                <div className="blocked-button"></div>
-                <span>Blocking</span>
-              </button>
-              <button
-                onClick={() => this.selectColor(typesOfCell.WALKING)}
-                className={
-                  this.state.selectedColorOption === typesOfCell.WALKING
-                    ? "color-button d-flex selected-color-button"
-                    : "color-button d-flex"
-                }
-              >
-                <div className="walking-button"></div>
-                <span>Walking</span>
-              </button>
-              <button
-                onClick={() => this.selectColor(typesOfCell.ACCESSIBILITY)}
-                className={
-                  this.state.selectedColorOption === typesOfCell.ACCESSIBILITY
-                    ? "color-button d-flex selected-color-button"
-                    : "color-button d-flex"
-                }
-              >
-                <div className="accessibility-button"></div>
-                <span>Accessibility</span>
-              </button>
-            </div>
-          </div>
+          <LocalGrid
+            matrix={this.state.matrix}
+            updateMatrix={this.updateMatrix}
+            replaceMatrix={this.replaceMatrix}
+          />
           <div className="col-12 col-md-6 mt-4 mb-5">
             <button
               className="btn btn-primary col-md-12"
