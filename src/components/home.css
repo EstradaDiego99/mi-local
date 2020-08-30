@@ -1,3 +1,7 @@
+h1 {
+  text-align: center;
+}
+
 .map {
   max-width: 50vw;
   width: 50vw;
@@ -13,6 +17,7 @@
 }
 
 .available {
+  background-color: rgb(202, 240, 255);
 }
 
 .unavailable {
@@ -23,9 +28,13 @@
 .row-cells {
   display: flex;
   flex-wrap: nowrap;
+  width: fit-content;
+  margin: 0 auto;
 }
 
 .cells-container {
+  width: 100%;
+  height: min(100vw, 100%);
   overflow: scroll;
 }
 
@@ -52,29 +61,24 @@
   color: white;
   border: none;
   box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.75);
-  margin-top: 2em;
 }
 .primaryButton:hover {
   background-color: rgb(56, 135, 224);
-}
-
-.form {
-  display: flex;
-  margin: 2em;
 }
 
 .cell {
   background-color: rgb(202, 240, 255);
   border: 0px solid rgb(199, 225, 255);
   margin: 0.08em;
-  color: rgb(202, 240, 255);
-  width: 2em !important;
+  color: transparent;
+  width: 20px !important;
+  height: 20px !important;
 }
 
 .display {
   display: block;
 }
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 767px) {
   .map {
     max-width: 100vw !important;
     width: 100vw;

@@ -113,77 +113,82 @@ export default class Home extends Component {
 
   render() {
     /** When the cell is true, the space is available */
-    const objectMatrix = this.generateMatrix(this.state.matrix);
+    const objectMatrix = (
+      <div className="cells-container">
+        {this.generateMatrix(this.state.matrix)}
+      </div>
+    );
     // let widthInput = React.createRef();
     // let heightInput = React.createRef();
 
     return (
       <div>
-        <h1>Selecciona tu espacio</h1>
-        <form>
-          <div className="form-row">
-            <div className="form-group col-md-4">
-              <label>Ancho: </label>
-              <input
-                type="text"
-                name="width"
-                autoComplete="nope"
-                className="form-control"
-                value={this.state.width}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <div className="form-group col-md-4">
-              <label>Largo: </label>
-              <input
-                type="text"
-                name="height"
-                autoComplete="nope"
-                className="form-control"
-                value={this.state.height}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <div className="form-group col-md-4">
-              <label></label>
+        <header>
+          <h1>Acomodando mi espacio</h1>
+        </header>
+        <div className="container d-flex flex-wrap">
+          <div className="col-12 col-md-6 mt-4 card p-2">
+            <form className="d-flex container-fluid flex-wrap align-items-center mb-1 justify-content-center">
+              <div className="input-group col-5 p-1">
+                <input
+                  type="text"
+                  name="width"
+                  autoComplete="nope"
+                  className="form-control"
+                  placeholder="Largo"
+                  value={this.state.width}
+                  onChange={this.handleInputChange}
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">mts</span>
+                </div>
+              </div>
+              <span>X</span>
+              <div className="input-group col-5 p-1">
+                <input
+                  type="text"
+                  name="height"
+                  autoComplete="nope"
+                  className="form-control"
+                  placeholder="Ancho"
+                  value={this.state.height}
+                  onChange={this.handleInputChange}
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">mts</span>
+                </div>
+              </div>
               <button
-                className="btn btn-primary button"
+                className="btn btn-primary button col-11 mt-2 mb-2"
                 onClick={this.updateSize}
               >
                 Actualizar
               </button>
-            </div>
+            </form>
+            {objectMatrix}
           </div>
-          <div className="form-row">
-            <div className="form-group col-12">
-              <label>Tome en cuenta que las medidas estan en metros</label>
+          <div className="col-12 col-md-6 mt-4 mb-5">
+            <button
+              className="btn btn-primary col-md-12"
+              onClick={this.triggerNewObjectPanel}
+            >
+              Nuevo mueble
+            </button>
+            <div
+              id="new-object-container"
+              className={this.state.showNewObject ? "display " : "d-none"}
+            >
+              <NewObject
+                objects={this.state.objects}
+                triggerNewObjectPanel={this.triggerNewObjectPanel}
+              />
             </div>
-          </div>
-        </form>
-        <div className="map">
-          <div className="cells-container">{objectMatrix}</div>
-        </div>
-        <div className="objects">
-          <button
-            className="btn btn-primary"
-            onClick={this.triggerNewObjectPanel}
-          >
-            Nuevo mueble
-          </button>
-          <div
-            id="new-object-container"
-            className={this.state.showNewObject ? "display " : "d-none"}
-          >
-            <NewObject
+            <ObjectsList
               objects={this.state.objects}
-              triggerNewObjectPanel={this.triggerNewObjectPanel}
+              updateObjectPeopleQuantity={this.updateObjectPeopleQuantity}
+              removeObject={this.removeObject}
             />
           </div>
-          <ObjectsList
-            objects={this.state.objects}
-            updateObjectPeopleQuantity={this.updateObjectPeopleQuantity}
-            removeObject={this.removeObject}
-          />
         </div>
       </div>
     );
