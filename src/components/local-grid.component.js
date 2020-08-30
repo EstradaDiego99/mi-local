@@ -149,6 +149,10 @@ export default class LocalGrid extends Component {
             Actualizar
           </button>
         </form>
+        <div className="d-flex cuadrito-label align-items-center">
+          <div></div>
+          <small>Un cuadito representa 0.5mts</small>
+        </div>
         {objectMatrix}
         <div className="d-flex flex-wrap justify-content-around">
           <button

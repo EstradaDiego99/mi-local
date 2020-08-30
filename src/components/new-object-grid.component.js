@@ -9,9 +9,7 @@ export default class NewObjectGrid extends Component {
       for (const j in newObjectMatrix[i]) {
         row.push(
           <button
-            className={
-              newObjectMatrix[i][j] ? "cell available" : "cell unavailable"
-            }
+            className={newObjectMatrix[i][j] ? "cell available" : "cell object"}
             onClick={(event) => {
               event.preventDefault();
               this.props.updateMatrix(i, j);

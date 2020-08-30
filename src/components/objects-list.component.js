@@ -13,9 +13,7 @@ export default class ObjectsList extends Component {
       const row = [];
       for (const j in matrix[i]) {
         row.push(
-          <button
-            className={matrix[i][j] ? "cell available" : "cell unavailable"}
-          >
+          <button className={matrix[i][j] ? "cell available" : "cell object"}>
             .
           </button>
         );

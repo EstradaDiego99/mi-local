@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import NewObject from "./new-object.component";
 import ObjectsList from "./objects-list.component";
 import LocalGrid from "./local-grid.component";
+import ResultGrid from "./result-grid.component";
 import "./home.css";
 import { typesOfCell } from "../globals";
+import { sum_array, poner_muebles } from "../logic";
 
 export default class Home extends Component {
   constructor(props) {
@@ -14,6 +16,8 @@ export default class Home extends Component {
       matrix: new Array(20).fill().map(function () {
         return new Array(20).fill(typesOfCell.AVAILABLE);
       }),
+      /** Grid resulting of the layout algorithm */
+      proposedLayout: [],
 
       /** Objects we will store */
       objects: [],
@@ -21,8 +25,8 @@ export default class Home extends Component {
       /** Do we show the new object panel? */
       showNewObject: false,
 
-      /** The total amount of customers we have based on the objects we have */
-      aforoTotal: 0,
+      /** Do we show the new object panel? */
+      showProposedLayout: false,
 
       /** The percentage of the total amount of customers we can hold */
       porcentajeAforo: 100.0,
@@ -42,6 +46,7 @@ export default class Home extends Component {
     this.beGONE = this.beGONE.bind(this);
     this.removeObject = this.removeObject.bind(this);
     this.selectColor = this.selectColor.bind(this);
+    this.removeResultPanel = this.removeResultPanel.bind(this);
   }
 
   handleInputChange(event) {
@@ -103,8 +108,23 @@ export default class Home extends Component {
     this.setState({ objects: objects });
   }
 
+  removeResultPanel() {
+    console.log(this.state);
+    this.setState({ showProposedLayout: false });
+  }
+
   beGONE() {
     console.log("beGONE!!!");
+    const matrixCopy = [];
+    for (var i = 0; i < this.state.matrix.length; i++)
+      matrixCopy[i] = this.state.matrix[i].slice();
+    const proposedLayout = poner_muebles(
+      matrixCopy,
+      [...this.state.objects],
+      this.state.minDistance
+    );
+    this.setState({ proposedLayout: proposedLayout });
+    this.setState({ showProposedLayout: true });
   }
 
   colorFromMatrixState(state) {
@@ -168,7 +188,7 @@ export default class Home extends Component {
                 </div>
               </div>
               <small>
-                De un aforo total de {this.state.aforoTotal} personas
+                De un aforo total de {sum_array(this.state.objects)} personas
               </small>
             </div>
             <div className="col-6 col-md-4 mb-3">
@@ -189,7 +209,13 @@ export default class Home extends Component {
             <div id="admittance-text-summary" className="col-12 col-md-3">
               <p className="mt-1">Admitiendo</p>
               <p>
-                <strong>{this.state.gentePermitida}</strong>
+                <strong>
+                  {Math.floor(
+                    (sum_array(this.state.objects) *
+                      parseInt(this.state.porcentajeAforo)) /
+                      100
+                  ) || 0}
+                </strong>
               </p>
               <p> personas</p>
             </div>
@@ -204,35 +230,44 @@ export default class Home extends Component {
           Calcular acomodo
         </button>
 
-        <div className="container d-flex flex-wrap">
-          <LocalGrid
-            matrix={this.state.matrix}
-            updateMatrix={this.updateMatrix}
-            replaceMatrix={this.replaceMatrix}
-          />
-          <div className="col-12 col-md-6 mt-4 mb-5">
-            <button
-              className="btn btn-primary col-md-12"
-              onClick={this.triggerNewObjectPanel}
-            >
-              Nuevo mueble
-            </button>
-            <div
-              id="new-object-container"
-              className={this.state.showNewObject ? "display " : "d-none"}
-            >
-              <NewObject
-                objects={this.state.objects}
-                triggerNewObjectPanel={this.triggerNewObjectPanel}
-              />
-            </div>
-            <ObjectsList
-              objects={this.state.objects}
-              updateObjectPeopleQuantity={this.updateObjectPeopleQuantity}
-              removeObject={this.removeObject}
+        {this.state.showProposedLayout ? (
+          <div className="container d-flex flex-wrap">
+            <ResultGrid
+              matrix={this.state.proposedLayout}
+              removeResultPanel={this.removeResultPanel}
             />
           </div>
-        </div>
+        ) : (
+          <div className="container d-flex flex-wrap">
+            <LocalGrid
+              matrix={this.state.matrix}
+              updateMatrix={this.updateMatrix}
+              replaceMatrix={this.replaceMatrix}
+            />
+            <div className="col-12 col-md-6 mt-4 mb-5">
+              <button
+                className="btn btn-primary col-md-12"
+                onClick={this.triggerNewObjectPanel}
+              >
+                Nuevo mueble
+              </button>
+              <div
+                id="new-object-container"
+                className={this.state.showNewObject ? "display " : "d-none"}
+              >
+                <NewObject
+                  objects={this.state.objects}
+                  triggerNewObjectPanel={this.triggerNewObjectPanel}
+                />
+              </div>
+              <ObjectsList
+                objects={this.state.objects}
+                updateObjectPeopleQuantity={this.updateObjectPeopleQuantity}
+                removeObject={this.removeObject}
+              />
+            </div>
+          </div>
+        )}
       </div>
     );
   }

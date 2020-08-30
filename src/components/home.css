@@ -117,6 +117,14 @@ h1 {
   background-color: rgb(54, 190, 190);
 }
 
+.object {
+  background-color: rgb(90, 47, 7) !important;
+}
+
+.distance {
+  background-color: rgb(202, 240, 255);
+}
+
 .color-button {
   background-color: transparent;
   border: transparent;
@@ -144,6 +152,21 @@ h1 {
 }
 .accessibility-button {
   background-color: rgb(54, 190, 190);
+}
+.object-button {
+  background-color: rgb(90, 47, 7) !important;
+}
+
+.cuadrito-label {
+  align-items: center;
+}
+
+.cuadrito-label div {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  background-color: transparent;
+  border: 1px solid #aaa;
 }
 
 .display {
