@@ -10,7 +10,7 @@ function App() {
     <Router>
       <div className="container">
         <nav className="navbar nav">
-          <a className="nav-link ">
+          <a className="nav-link" href="/">
             <img
               src="https://image.flaticon.com/icons/svg/904/904140.svg"
               width="30"
@@ -20,7 +20,9 @@ function App() {
               loading="lazy"
             ></img>
           </a>
-          <a className="nav-link">MI LOCAL</a>
+          <a className="nav-link" href="/">
+            MI LOCAL
+          </a>
         </nav>
         <Route path="/" exact component={Home} />
       </div>
