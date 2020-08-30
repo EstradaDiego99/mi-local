@@ -7,6 +7,9 @@ export default class NewObject extends Component {
     super(props);
 
     this.state = {
+      /** Name of the object to save */
+      newObjectName: "",
+
       /** Amount of people that object contains */
       peopleQuantity: 2,
 
@@ -23,11 +26,19 @@ export default class NewObject extends Component {
 
     this.updateMatrix = this.updateMatrix.bind(this);
     this.saveNewObject = this.saveNewObject.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
 
     this.increaseGridRow = this.increaseGridRow.bind(this);
     this.decreaseGridRow = this.decreaseGridRow.bind(this);
     this.increseGridColumn = this.increseGridColumn.bind(this);
     this.decreaseGridColumn = this.decreaseGridColumn.bind(this);
+  }
+
+  handleInputChange(event) {
+    let { name, value } = event.target;
+    this.setState({
+      [name]: value,
+    });
   }
 
   updateMatrix(i, j) {
@@ -89,8 +100,16 @@ export default class NewObject extends Component {
 
   saveNewObject(event) {
     event.preventDefault();
-    this.props.objects.push("uwu");
+    // TODO(diego): Add function to trim the object borders
+    // TODO(diego): Update function when the algorithm supports complex shapes
+    this.props.objects.push({
+      nombre: this.state.newObjectName,
+      forma: this.state.newObjectMatrix,
+      capacidad: this.state.peopleQuantity,
+      cantidad: this.state.objectsQuantity,
+    });
     this.props.triggerNewObjectPanel();
+    this.setState({ newObjectName: "" });
     this.setState({ peopleQuantity: 2 });
     this.setState({ objectsQuantity: 1 });
     this.setState({
@@ -103,7 +122,12 @@ export default class NewObject extends Component {
       <form id="new-object" className="mt-4">
         <input
           id="new-object-name"
+          type="text"
           placeholder="Nombre de nuevo objeto"
+          value={this.state.newObjectName}
+          name="newObjectName"
+          autoComplete="nope"
+          onChange={this.handleInputChange}
         ></input>
         <div className="d-flex">
           <NewObjectGrid

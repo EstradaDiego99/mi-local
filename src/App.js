@@ -10,7 +10,7 @@ function App() {
     <Router>
       <div className="container">
         <nav className="navbar nav">
-          <a class="nav-link ">
+          <a className="nav-link ">
             <img
               src="https://image.flaticon.com/icons/svg/904/904140.svg"
               width="30"
