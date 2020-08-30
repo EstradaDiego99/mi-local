@@ -22,6 +22,19 @@
   overflow: scroll;
 }
 
+#new-object-name {
+  width: 100%;
+}
+
+.quantity-input input {
+  max-width: 4em;
+  text-align: center;
+}
+
+#new-object-grid {
+  max-width: 50%;
+}
+
 .button {
   border-radius: 10px;
   max-height: 3em;

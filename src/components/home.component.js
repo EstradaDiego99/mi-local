@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import NewObject from "./new-object.component";
 import "./home.css";
 
 export default class Home extends Component {
@@ -8,17 +9,26 @@ export default class Home extends Component {
     this.state = {
       /** Width of the local space in meters */
       width: 10.0,
+
       /** Height of the local space in meters */
       height: 10.0,
 
+      /** Grid used to represent the local space */
       matrix: new Array(20).fill().map(function () {
         return new Array(20).fill(true);
       }),
+
+      /** Objects we will store */
+      objects: [],
+
+      /** Do we show the new object panel? */
+      showNewObject: false,
     };
 
     this.updateMatrix = this.updateMatrix.bind(this);
     this.updateSize = this.updateSize.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.triggerNewObjectPanel = this.triggerNewObjectPanel.bind(this);
   }
 
   handleInputChange(event) {
@@ -32,6 +42,11 @@ export default class Home extends Component {
     const neoMatrix = this.state.matrix;
     neoMatrix[i][j] = !neoMatrix[i][j];
     this.setState({ matrix: neoMatrix });
+    console.log(this.state.objects);
+  }
+
+  triggerNewObjectPanel() {
+    this.setState({ showNewObject: !this.state.showNewObject });
   }
 
   updateSize(event) {
@@ -141,6 +156,19 @@ export default class Home extends Component {
           </div>
         </form>
         <div className="cells-container">{objectMatrix}</div>
+        <div className="mt-4">
+          <button onClick={this.triggerNewObjectPanel}>Nuevo mueble</button>
+          <div
+            id="new-object-container"
+            className={this.state.showNewObject ? "d-block" : "d-none"}
+          >
+            <NewObject
+              objects={this.state.objects}
+              triggerNewObjectPanel={this.triggerNewObjectPanel}
+            />
+          </div>
+          <div id="muebles-list"></div>
+        </div>
       </div>
     );
   }
